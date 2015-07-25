@@ -48,7 +48,7 @@ void setup() {
   Serial.println("setup begin!");
 
   // Door Sensor
-  pinMode(doorPin, INPUT);
+  pinMode(doorPin, INPUT_PULLUP);
 
   // Setup DHT
   dht.begin();
