@@ -59,12 +59,11 @@ void loop() {
   }
   
   servo1.write(Rot1);
-  servo2.write(Rot1);
+  servo2.write(Rot2);
 
-  //Serial.print("1: ");
-  //Serial.print(Rot1);
-  //Serial.print(", 2: ");
-  //Serial.println(Rot2);  
+  Serial.print(Rot1);
+  Serial.print(",");
+  Serial.println(Rot2);  
 
   delay(10);
 }
