@@ -1,12 +1,9 @@
 #include <DHT.h>
 
-#define DHTPIN 4
+#define DHTPIN 12
 #define DHTTYPE DHT11
 
 DHT dht(DHTPIN, DHTTYPE);
-
-char str[5];
-int counter = 0;
 
 void setup() {
   Serial.begin(9600);
@@ -20,9 +17,10 @@ void loop() {
   int h = dht.readHumidity();
   // Read temperature as Celsius (the default)
   int t = dht.readTemperature();
-    
-  itoa(t * 100 + h, str, 10); //Turn value into a character array
-  Serial.write(str, 4);
+
+  Serial.print(t);
+  Serial.print(":");
+  Serial.println(h);
 
   delay(1000);
 }

@@ -7,3 +7,6 @@
 [submodule "libraries/TM1637"]
 	path = libraries/TM1637
 	url = https://github.com/hck509/TM1637.git
+[submodule "libraries/MQ135"]
+	path = libraries/MQ135
+	url = https://github.com/hck509/MQ135.git

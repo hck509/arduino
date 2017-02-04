@@ -9,12 +9,14 @@ void setup()
   lcd.init(); // initialize the lcd
   // Print a message to the LCD.
   lcd.backlight();
+  lcd.clear();
+  lcd.setCursor(0, 0);
   lcd.print("Hello, world!");
 }
 
 void loop()
 {
-  
+  lcd.print("Hello, world!");
 }
 
 

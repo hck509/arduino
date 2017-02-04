@@ -41,6 +41,7 @@ const float BatteryChargeVoltage [11] = {
 
 float totalAmph = 0;
 unsigned long lastTickTime = 0;
+float smoothedCurrent = 0;
 
 void setup()
 {
@@ -92,8 +93,11 @@ void setup()
 
 void loop()
 {
-  float voltage = GetVoltage(300);
-  float current = GetCurrentValue(300);
+  float voltage = GetVoltage(100);
+  delay(10);
+  float current = GetCurrentValue(100);
+  smoothedCurrent = smoothedCurrent + ((current - smoothedCurrent) * 0.1);
+  current = smoothedCurrent;
 
   float stateOfCharge = 0;
   for (int i = 0; i < 11; ++i)
@@ -112,30 +116,25 @@ void loop()
 
   lastTickTime = nowTickTime;  
 
-  if ((nowTickTime / 1000) % 5 == 0)
-  {
-    // LCD State of Charge (voltage %)
-    lcd.setCursor(0, 0);
-    lcd.print(stateOfCharge, 0);
-    lcd.print("%    ");
-  }
-  else
-  {
-    // LCD Voltage
-    lcd.setCursor(0, 0);
-    lcd.print(voltage, 2);
-    lcd.print("V");
-  }
+  // LCD Voltage
+  lcd.setCursor(0, 0);
+  lcd.print(voltage, 2);
+  lcd.print("V");
+  
+  // LCD State of Charge (voltage %)
+  lcd.setCursor(0, 1);
+  lcd.print(stateOfCharge, 0);
+  lcd.print("%    ");
 
   // LCD Current
-  lcd.setCursor(8, 0);
-  lcd.print(current, 2);
+  lcd.setCursor(current < 0 ? 10 : 11, 0);
+  lcd.print(current,  current < 1 ? 2 : 1);
   lcd.print("A  ");
 
   // LCD Amp-Hour
-  lcd.setCursor(0, 1);
-  lcd.print(totalAmph, 2);
-  lcd.print("Ah  ");  
+  lcd.setCursor(5, 1);
+  lcd.print(totalAmph, 1);
+  lcd.print("Ah  ");
   
   // LCD time
   lcd.setCursor(11, 1);
@@ -210,10 +209,10 @@ float GetCurrentValue(int sampleCount)
       delay(1);
     }
 
-    //Serial.print("Current V: ");
-    //Serial.print(analogRead(ACSPin) / 1024.0 * 1.1, 3);
-    //Serial.print(" V2: ");
-    //Serial.println(analogRead(ACSPin) / 1024.0 * 1.1 / Resister1 * (Resister1 + Resister2), 3);
+    Serial.print("Current V: ");
+    Serial.print(analogRead(ACSPin) / 1023.0 * 1.1 * InteralARefCalibration, 3);
+    Serial.print(" Raw: ");
+    Serial.println(analogRead(ACSPin), 1);
 
     analogReference(DEFAULT);
 
