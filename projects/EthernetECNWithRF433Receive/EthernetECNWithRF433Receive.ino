@@ -1,3 +1,10 @@
+//#include <Dhcp.h>
+//#include <Dns.h>
+//#include <Ethernet.h>
+//#include <EthernetClient.h>
+//#include <EthernetServer.h>
+//#include <EthernetUdp.h>
+
 
 // https://github.com/jcw/ethercard
 #include <EtherCard.h>
@@ -6,9 +13,9 @@
 #include <VirtualWire.h>
 
 static byte mymac[] = { 0x74,0x69,0x69,0x2D,0x30,0x31 };
-static byte myip[] = { 192,168,10,120 };
-static byte gwip[] = { 192,168,10,1 };
-static byte severip[] = { 192,168,10,6 };
+static byte myip[] = { 192,168,0,120 };
+static byte gwip[] = { 192,168,0,1 };
+static byte severip[] = { 192,168,0,2 };
 
 byte Ethernet::buffer[500];
 BufferFiller bfill;
